@@ -1,0 +1,74 @@
+package vcmsa.ci.examapplication
+
+import android.icu.text.CaseMap.Title
+import android.media.Rating
+import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContentView(R.layout.activity_main)
+
+
+//User Interface coding
+        val edtSongTitle = findViewById<EditText>(R.id.edtSongTitle)
+        val edtArtistName = findViewById<EditText>(R.id.edtArtistName)
+        val editRating = findViewById<EditText>(R.id.editRating)
+        val edtComments = findViewById<EditText>(R.id.edtComments)
+
+//Coding for the button used on screen one
+        val addButton = findViewById<Button>(R.id.addButton)
+        val nextScreenbtn = findViewById<Button>(R.id.nextScreenbtn)
+        val edtExitBtn = findViewById<Button>(R.id.edtExitBtn)
+//Arrays
+        addButton.setOnClickListener {
+            try {
+                val SongTitle = edtSongTitle.text.toString()
+                val ArtistName = edtArtistName.text.toString()
+                val Rating = editRating.text.toString()
+                val edtComments = edtComments.text.toString()
+
+                if (SongTitle.isEmpty()) (ArtistName.isEmpty())(Rating.isEmpty())
+                Toast.makeText(this, "Please enter the song details.", Toast.LENGTH_SHORT).show()
+            }
+            else{
+
+            edtSongTitle.add(edtSongTitle)
+            edtArtistName.add(edtArtistName)
+            editRating.add(editRating)
+            edtComments.add(edtComments)
+            Toast.makeText(this, "Item added.", Toast.LENGTH_SHORT)
+        }
+        }
+
+
+//Button for moving between the two screens
+        nextScreenbtn.setOnClickListener {
+            val intent(this, Screen2::class.java)
+            intent.putStringArrayListExtra("edtSongTitle", edtSongTitle)
+            intent.putStringArrayListExtra("edtArtistName", edtArtistName)
+            intent.putintegerArrayListExtra("editRating", editRating)
+            intent.putStringArrayListExtra("edtComments", edtComments)
+            startActivity(intent)
+        }
+
+//Exit button( used to exit the application if your finished using it)
+        edtExitBtn.setOnClickListener {
+            finishAffinity()
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+    }
+}
