@@ -1,0 +1,57 @@
+package vcmsa.ci.examapplication
+
+import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+
+class Screen2 : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContentView(R.layout.activity_screen2)
+//User interface
+        val btnSongs = findViewById<Button>(R.id.btnSongs)
+        val btnReturn = findViewById<Button>(R.id.btnReturn)
+        val btnDisplay = findViewById<Button>(R.id.btnDisplay)
+        val txtResults = findViewById<TextView>(R.id.txtResults)
+
+        val SongTitle = intent.getStringArrayListExtra("SongTitle") ?: arrayListOf()
+        val ArtistsName = intent.getStringArrayListExtra("ArtistsName") ?: arrayListOf()
+        val Ratings = intent.getStringArrayListExtra("Ratings") ?: arrayListOf()
+        val UserComments = intent.getStringArrayListExtra("UserComments") ?: arrayListOf()
+
+
+//Button to get the answers or results
+        btnDisplay.setOnClickListener {
+            var result = ""
+            for (S in SongTitle.indices) {
+                result += "${SongTitle} (${ArtistsName}) (${Ratings}), Note:${UserComments}\n"
+            }
+            txtResults.text = result
+        }
+ //Return button to back to screen one
+        btnReturn.setOnClickListener {
+            var result = ""
+            for (R in Ratings.indices) {
+            }
+        }
+
+        txtResults.text = result
+       btnReturn.setOnClickListener() {
+            finish()
+        }
+
+
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+    }
+}
